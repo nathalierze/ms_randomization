@@ -15,4 +15,5 @@ channel = connection.channel()
 #     channel.basic_publish(exchange='', routing_key='main', body=json.dumps(body), properties=properties)
 
 def publish():
-    channel.basic_publish(exchange='', routing_key='admin', body='hello')
+    print("def publish")
+    channel.basic_publish(exchange='', routing_key='ortho_queue', body='hallo ich bin der python service')
