@@ -7,13 +7,12 @@ from rest_framework.views import APIView
 from .models import User
 from .producer import publish
 from .serializers import UserSerializer
-import random
 
 
-class UserAPIView(viewsets.ViewSet):
+class UserViewSet(viewsets.ViewSet):
     def list(self, request):
         users = User.objects.all()
-        serializer = UserSerializer(User, many=True)
+        serializer = UserSerializer(users, many=True)
         print("get method")
         publish()
         return Response(serializer.data)

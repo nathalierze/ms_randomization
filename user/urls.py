@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import UserAPIView
+from .views import UserViewSet
 
 urlpatterns = [
-    path('user', UserAPIView.as_view({
+    path('user', UserViewSet.as_view({
         'get':'list',
         'post': 'create'
     }))
