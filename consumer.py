@@ -1,7 +1,7 @@
 import pika, json, os, django
 
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "admin.settings")
-# django.setup()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "admin.settings")
+django.setup()
 
 from user.models import User
 
