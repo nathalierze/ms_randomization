@@ -11,6 +11,7 @@ channel = connection.channel()
 
 
 # def publish(method, body):
-def publish():
+def publish(body):
     print("def publish")
-    channel.basic_publish(exchange='', routing_key='ortho_queue', body='hallo ich bin der python service!')
+    print(body)
+    channel.basic_publish(exchange='', routing_key='ortho_queue', body=body)

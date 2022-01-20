@@ -1,4 +1,10 @@
+import random
+
 def grouping(body):
     print("in grouping")
     print(body)
-    return 0
+
+    interventiongroups = ['1','2','3']
+    random_num = random.choice(interventiongroups)
+    
+    return random_num
