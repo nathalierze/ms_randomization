@@ -1,5 +1,5 @@
 import pika, json, os, django
-import interventiongroup.grouping as grouping
+import schueler.grouping as grouping
 import producer
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "admin.settings")

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'schueler'
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,14 @@ WSGI_APPLICATION = 'admin.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': { }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'orthogra_db1',
+        'USER': 'root',
+        'PASSWORD':'test',
+        'HOST':'db',
+        'PORT':'3306'
+     }
 }
 
 
