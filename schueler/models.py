@@ -1,0 +1,25 @@
+from django.db import models
+
+# Create your models here.
+class schueler(models.Model):
+    ID = models.IntegerField(primary_key=True)
+    Name = models.CharField(max_length=30)
+    Passwort_express = models.CharField(max_length=32)
+    Email = models.CharField(max_length=40)
+    Loginname = models.CharField(max_length=60)
+    Passwort = models.IntegerField()
+    SessionID = models.CharField(max_length=32)
+    Lehrername = models.CharField(max_length=30)
+    LehrerID = models.IntegerField()
+    Klassenname = models.CharField(max_length=30)
+    Geschlecht = models.CharField(max_length=20)
+    Klassenstufe = models.CharField(max_length=20)
+    Anmeldedatum = models.IntegerField()
+    Anmeldeklassenstufe = models.CharField(max_length=30)
+    Altklasse = models.CharField(max_length=30)
+    gesperrt = models.CharField(max_length=30)
+    Aufgaben = models.CharField(max_length=300)
+    Altaufgaben = models.CharField(max_length=600)
+    done = models.IntegerField()
+    Info = models.CharField(max_length=60)
+    interventiongroup = models.IntegerField()
