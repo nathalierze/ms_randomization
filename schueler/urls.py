@@ -6,5 +6,7 @@ urlpatterns = [
     # path('schueler', SchuelerViewSet.as_view({
     #     'get': 'list'
     # })),
-    path('schueler', SchuelerViewSet.as_view())
+    path('schueler', SchuelerViewSet.as_view({
+        'get':'list'
+    }))
 ]

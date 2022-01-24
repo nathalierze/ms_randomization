@@ -9,20 +9,16 @@ from .serializers import schuelerSerializer
 import random
 from rest_framework import generics
 
-
-
-# class SchuelerViewSet(viewsets.ModelViewSet):
-#     def list(self, request):
-#         schuelers = schueler.objects.all()
-#         serializer = schuelerSerializer(schuelers, many=True)
-#         return Response(serializer.data)
-
-class SchuelerViewSet(generics.ListCreateAPIView):
+class SchuelerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
     queryset = schueler.objects.all()
     serializer_class = schuelerSerializer
 
     def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = self.get_queryset()
-        serializer = schuelerSerializer(queryset, many=True)
+        schuelers = schueler.objects.all()
+        serializer = schuelerSerializer(schuelers, many=True)
         return Response(serializer.data)
+
+
