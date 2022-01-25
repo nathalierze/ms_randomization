@@ -24,7 +24,7 @@ class schueler(models.Model):
     Altaufgaben = models.CharField(max_length=600, blank=True )
     done = models.IntegerField(blank=True)
     Info = models.CharField(max_length=60, blank=True )
-    interventiongroup = models.IntegerField(blank=True)
+    interventiongroup = models.CharField(max_length=10, blank=True)
 
 class sitzungssummary(models.Model):
     class Meta:

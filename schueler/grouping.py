@@ -16,13 +16,21 @@ def grouping(body):
     # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
     # dann checken ob gk -> user gruppe zuordnen
     # wenn nicht gk -> 0 zurückgeben 
-    if(user.interventiongroup!=0):
+    if(user.interventiongroup!='0'):
         cohort = user.interventiongroup
+        sitzung.isExperiment = 1
+        sitzung.save()
     elif(sitzung.Art=='GK'):
         cohorts = ['1','2','3','4','5']
         cohort = random.choice(cohorts)
+
+        user.interventiongroup = cohort
+        user.save()
+
+        sitzung.isExperiment = 1
+        sitzung.save()
     else:
-        cohort = 0
+        cohort = '0'
 
     print(cohort)
     return cohort
