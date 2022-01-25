@@ -9,8 +9,6 @@ connection = pika.BlockingConnection(params)
 
 channel = connection.channel()
 
-
-# def publish(method, body):
 def publish(body):
     print("def publish")
     print(body)

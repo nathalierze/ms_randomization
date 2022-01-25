@@ -4,8 +4,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from .models import schueler
-from .serializers import schuelerSerializer
+from .models import schueler, sitzungssummary
+from .serializers import schuelerSerializer, sitzungssummarySerializer
 import random
 from rest_framework import generics
 
@@ -29,9 +29,39 @@ class SchuelerViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
     def retrieve(self, request, pk=None):
-        product = schueler.objects.get(ID=pk)
-        serializer = schuelerSerializer(product)
+        schuelers = schueler.objects.get(ID=pk)
+        serializer = schuelerSerializer(schuelers)
+        return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        schuelers = schueler.objects.get(ID=pk)
+        serializer = schuelerSerializer(instance=schuelers, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+class SitzungssummaryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = sitzungssummary.objects.all()
+    serializer_class = schuelerSerializer
+
+    def list(self, request):
+        sitzungssummaries = sitzungssummary.objects.all()
+        print(sitzungssummaries.last)
+        serializer = sitzungssummarySerializer(sitzungssummaries, many=True)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = sitzungssummarySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, pk):
+        sitzungssummaries = sitzungssummary.objects.get(ID=pk)
+        serializer = sitzungssummarySerializer(sitzungssummaries)
         return Response(serializer.data)
 

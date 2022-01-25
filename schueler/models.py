@@ -1,9 +1,5 @@
 from django.db import models
 
-# Create your models here.
-# class Meta:
-#     db_table = ''
-
 class schueler(models.Model):
     class Meta:
         db_table = 'schueler'
@@ -30,4 +26,21 @@ class schueler(models.Model):
     Info = models.CharField(max_length=60, blank=True )
     interventiongroup = models.IntegerField(blank=True)
 
+class sitzungssummary(models.Model):
+    class Meta:
+        db_table = 'sitzungssummary'
     
+    ID = models.IntegerField(primary_key=True)
+    UserID = models.IntegerField()
+    UserAttribut = models.CharField(max_length=7)
+    AufgabenID = models.CharField(max_length=10)
+    Version = models.IntegerField()
+    TestID = models.IntegerField()
+    Art = models.CharField(max_length=5)
+    HA = models.CharField(max_length=10)
+    Fehler = models.IntegerField()
+    Altdatum = models.IntegerField()
+    Datum = models.DateTimeField()
+    Saetze = models.CharField(max_length=400)
+    Korrektur = models.IntegerField()
+    isExperiment = models.BinaryField()
