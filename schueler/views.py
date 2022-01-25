@@ -18,6 +18,7 @@ class SchuelerViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         schuelers = schueler.objects.all()
+        print(schuelers.last)
         serializer = schuelerSerializer(schuelers, many=True)
         return Response(serializer.data)
 
@@ -30,7 +31,7 @@ class SchuelerViewSet(viewsets.ModelViewSet):
 
 
     def retrieve(self, request, pk=None):
-        product = schueler.objects.get(id=pk)
+        product = schueler.objects.get(ID=pk)
         serializer = schuelerSerializer(product)
         return Response(serializer.data)
 

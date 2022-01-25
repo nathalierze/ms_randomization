@@ -1,7 +1,13 @@
 from django.db import models
 
 # Create your models here.
+# class Meta:
+#     db_table = ''
+
 class schueler(models.Model):
+    class Meta:
+        db_table = 'schueler'
+    
     ID = models.IntegerField(primary_key=True)
     Name = models.CharField(max_length=30, blank=True )
     Passwort_express = models.CharField(max_length=32, blank=True )
@@ -23,3 +29,5 @@ class schueler(models.Model):
     done = models.IntegerField(blank=True)
     Info = models.CharField(max_length=60, blank=True )
     interventiongroup = models.IntegerField(blank=True)
+
+    

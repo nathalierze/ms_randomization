@@ -4,3 +4,4 @@ env/
 @localhost.session.sql
 __pycache__
 quickstart
+migrations
