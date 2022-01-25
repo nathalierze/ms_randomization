@@ -21,4 +21,16 @@ class SchuelerViewSet(viewsets.ModelViewSet):
         serializer = schuelerSerializer(schuelers, many=True)
         return Response(serializer.data)
 
+    
+    def create(self, request):
+        serializer = schuelerSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+    def retrieve(self, request, pk=None):
+        product = schueler.objects.get(id=pk)
+        serializer = schuelerSerializer(product)
+        return Response(serializer.data)
 
