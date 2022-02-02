@@ -1,17 +1,17 @@
+from copyreg import pickle
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-
 from .models import schueler, sitzungssummary
-from .serializers import schuelerSerializer, sitzungssummarySerializer
+from .serializers import interventiongroupSerializer, schuelerSerializer, sitzungssummarySerializer
 import random
 from rest_framework import generics
 
 class SchuelerViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint
     """
     queryset = schueler.objects.all()
     serializer_class = schuelerSerializer
@@ -21,7 +21,6 @@ class SchuelerViewSet(viewsets.ModelViewSet):
         print(schuelers.last)
         serializer = schuelerSerializer(schuelers, many=True)
         return Response(serializer.data)
-
     
     def create(self, request):
         serializer = schuelerSerializer(data=request.data)
@@ -43,7 +42,7 @@ class SchuelerViewSet(viewsets.ModelViewSet):
 
 class SitzungssummaryViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint
     """
     queryset = sitzungssummary.objects.all()
     serializer_class = schuelerSerializer
@@ -63,5 +62,39 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk):
         sitzungssummaries = sitzungssummary.objects.get(ID=pk)
         serializer = sitzungssummarySerializer(sitzungssummaries)
+        return Response(serializer.data)
+
+    def getInterventiongroup(self, request, pk):
+        sitzung = sitzungssummary.objects.get(pk=pk)
+
+        if(sitzung.UserAttribut=='Schüler'):
+            user = schueler.objects.get(pk=sitzung.UserID)
+        elif(sitzung.UserAttribut=='Gast'):
+            print("gast noch nicht implementiert")
+            user = schueler.objects.get(pk=sitzung.UserID)
+        
+        # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
+        # dann checken ob gk -> user gruppe zuordnen
+        # wenn nicht gk -> 0 zurückgeben 
+        if(user.interventiongroup!='0'):
+            cohort = user.interventiongroup
+            sitzung.isExperiment = 1
+            sitzung.save()
+        elif(sitzung.Art=='GK'):
+            cohorts = ['1','2','3','4','5']
+            cohort = random.choice(cohorts)
+
+            user.interventiongroup = cohort
+            user.save()
+
+            sitzung.isExperiment = 1
+            sitzung.save()
+        else:
+            cohort = '0'
+            user.interventiongroup = 0
+            user.save()
+
+        schuelers = schueler.objects.get(ID=user.ID)
+        serializer = interventiongroupSerializer(schuelers)
         return Response(serializer.data)
 

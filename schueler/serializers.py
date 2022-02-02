@@ -8,7 +8,13 @@ class schuelerSerializer(serializers.ModelSerializer):
         model = schueler
         fields = '__all__'
 
+class interventiongroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = schueler
+        fields = ['interventiongroup']
+
 class sitzungssummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = sitzungssummary
         fields = '__all__'
+

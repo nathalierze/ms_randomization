@@ -33,4 +33,4 @@ def grouping(body):
         cohort = '0'
 
     print(cohort)
-    return cohort
+    return 5

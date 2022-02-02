@@ -26,6 +26,9 @@ class schueler(models.Model):
     Info = models.CharField(max_length=60, blank=True )
     interventiongroup = models.CharField(max_length=10, blank=True)
 
+    def __str__(self) -> str:
+        return super().__str__()
+
 class sitzungssummary(models.Model):
     class Meta:
         db_table = 'sitzungssummary'
@@ -44,3 +47,6 @@ class sitzungssummary(models.Model):
     Saetze = models.CharField(max_length=400)
     Korrektur = models.IntegerField()
     isExperiment = models.BinaryField()
+
+    def __str__(self) -> str:
+        return super().__str__()

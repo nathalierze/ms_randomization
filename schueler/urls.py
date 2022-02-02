@@ -17,5 +17,9 @@ urlpatterns = [
     })),
     path('sitzungssummary/<str:pk>', SitzungssummaryViewSet.as_view({
         'get': 'retrieve'
+    })),
+    path('interventiongroup/<str:pk>', SitzungssummaryViewSet.as_view({
+        'get': 'getInterventiongroup'
     }))
+
 ]
