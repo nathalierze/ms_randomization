@@ -5,6 +5,7 @@ from .models import schueler, sitzungssummary
 from .views import SchuelerViewSet, SitzungssummaryViewSet
 import json
 
+
 def grouping(body):
     sitzung = sitzungssummary.objects.get(pk=body)
 
@@ -33,4 +34,4 @@ def grouping(body):
         cohort = '0'
 
     print(cohort)
-    return 5
+    return cohort
