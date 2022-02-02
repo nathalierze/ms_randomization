@@ -50,3 +50,31 @@ class sitzungssummary(models.Model):
 
     def __str__(self) -> str:
         return super().__str__()
+
+class gast(models.Model):
+    class Meta: 
+        db_table = 'gaeste'
+
+    ID = models.IntegerField(primary_key=True)
+    Name = models.CharField(max_length=30)
+    Passwort = models.CharField(max_length=32)
+    Email = models.CharField(max_length=30)
+    Vorname = models.CharField(max_length=30)
+    Nachname = models.CharField(max_length=30)
+    Geschlecht = models.CharField(max_length=30)
+    Geburtsjahr = models.CharField(max_length=30)
+    Land = models.CharField(max_length=30)
+    Bundesland = models.CharField(max_length=30)
+    Beruf = models.CharField(max_length=30)
+    gesperrt = models.CharField(max_length=30)
+    Info = models.CharField(max_length=60)
+    Aufgaben = models.CharField(max_length=300)
+    Vergleichsgruppe = models.CharField(max_length=30)
+    done = models.SmallIntegerField()
+    Anmeldedatum = models.DateTimeField()
+    interventiongroup = models.CharField(max_length=10)
+
+    def __str__(self) -> str:
+        return super().__str__()
+
+    

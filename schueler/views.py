@@ -4,7 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import schueler, sitzungssummary
+from .models import schueler, sitzungssummary, gast
 from .serializers import interventiongroupSerializer, schuelerSerializer, sitzungssummarySerializer
 import random
 from rest_framework import generics
@@ -70,8 +70,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
         if(sitzung.UserAttribut=='Schüler'):
             user = schueler.objects.get(pk=sitzung.UserID)
         elif(sitzung.UserAttribut=='Gast'):
-            print("gast noch nicht implementiert")
-            user = schueler.objects.get(pk=sitzung.UserID)
+            user = gast.objects.get(pk=sitzung.UserID)
         
         # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
         # dann checken ob gk -> user gruppe zuordnen
