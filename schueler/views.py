@@ -67,8 +67,11 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     def getInterventiongroup(self, request, pk):
         sitzung = sitzungssummary.objects.get(pk=pk)
 
+        print(pk)
+
         if(sitzung.UserAttribut=='Schüler'):
             user = schueler.objects.get(pk=sitzung.UserID)
+            print(user.ID)
         elif(sitzung.UserAttribut=='Gast'):
             user = gast.objects.get(pk=sitzung.UserID)
         
@@ -77,8 +80,9 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
         # wenn nicht gk -> 0 zurückgeben 
         if(user.interventiongroup!='0'):
             cohort = user.interventiongroup
-            sitzung.isExperiment = 1
+            sitzung.isExperiment = True
             sitzung.save()
+
         elif(sitzung.Art=='GK'):
             cohorts = ['1','2','3','4','5','6']
             cohort = random.choice(cohorts)
@@ -86,7 +90,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
             user.interventiongroup = cohort
             user.save()
 
-            sitzung.isExperiment = 1
+            sitzung.isExperiment = True
             sitzung.save()
         else:
             cohort = '0'
@@ -95,5 +99,6 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
         schuelers = schueler.objects.get(ID=user.ID)
         serializer = interventiongroupSerializer(schuelers)
+
         return Response(serializer.data)
 

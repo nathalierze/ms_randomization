@@ -46,7 +46,7 @@ class sitzungssummary(models.Model):
     Datum = models.DateTimeField()
     Saetze = models.CharField(max_length=400)
     Korrektur = models.IntegerField()
-    isExperiment = models.BinaryField()
+    isExperiment = models.BooleanField()
 
     def __str__(self) -> str:
         return super().__str__()
