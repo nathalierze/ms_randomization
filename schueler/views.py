@@ -86,7 +86,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
         elif(sitzung.Art=='GK'):
             cohorts = ['1','2','3','4','5','6']
             cohort = random.choice(cohorts)
-
+            
             user.interventiongroup = cohort
             user.save()
 
