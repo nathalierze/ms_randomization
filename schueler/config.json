@@ -1,0 +1,47 @@
+{
+    "version": "1.0",
+    "experiments": [
+        {
+            "name": "learning_analytics",
+            "cohorts":
+            [
+                {
+                    "name": 1,
+                    "allocation": [
+                        [0, 16]
+                    ]
+                },
+                {
+                    "name": 2,
+                    "allocation": [
+                        [17, 33]
+                    ]
+                },
+                {
+                    "name": 3,
+                    "allocation": [
+                        [34, 50]
+                    ]
+                },
+                {
+                    "name": 4,
+                    "allocation": [
+                        [51, 67]
+                    ]
+                },
+                {
+                    "name": 5,
+                    "allocation": [
+                        [68, 84]
+                    ]
+                },
+                {
+                    "name": 6,
+                    "allocation": [
+                        [85, 100]
+                    ]
+                }
+            ]
+        }
+    ]
+}

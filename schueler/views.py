@@ -9,6 +9,9 @@ from .serializers import interventiongroupSerializer, schuelerSerializer, sitzun
 import random
 from rest_framework import generics
 
+from ABTesting import ABTestingController
+import json
+import os
 class SchuelerViewSet(viewsets.ModelViewSet):
     """
     API endpoint
@@ -69,6 +72,10 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
         print(pk)
 
+        # lade Daten aus config file
+        with open('/app/schueler/config.json') as json_file:
+            config_file = json.load(json_file)
+
         if(sitzung.UserAttribut=='Schüler'):
             user = schueler.objects.get(pk=sitzung.UserID)
             print(user.ID)
@@ -84,9 +91,15 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
             sitzung.save()
 
         elif(sitzung.Art=='GK'):
-            cohorts = ['1','2','3','4','5','6']
-            cohort = random.choice(cohorts)
+            user_id = sitzung.UserID
+            user_profile = {}
+            controller = ABTestingController(config_file, user_id, user_profile)
+            cohort = controller.get_cohort('learning_analytics')
             
+            # alter code
+            #cohorts = ['1','2','3','4','5','6']
+            #cohort = random.choice(cohorts)
+
             user.interventiongroup = cohort
             user.save()
 
@@ -96,6 +109,8 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
             cohort = '0'
             user.interventiongroup = 0
             user.save()
+
+        print(cohort)
 
         schuelers = schueler.objects.get(ID=user.ID)
         serializer = interventiongroupSerializer(schuelers)
