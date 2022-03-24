@@ -26,7 +26,7 @@ class TestCase(TestCase):
         interventiongroup_soll = test_schueler.interventiongroup
         # Get-Request für Funktion getInterventiongroup erzeugen - PK = Sitzungs-ID
         request = APIRequestFactory().get("")
-        method = SitzungssummaryViewSet.as_view({'get': 'getInterventiongroup'})
+        method = SitzungssummaryViewSet.as_view({'get': 'get_interventiongroup'})
         response = method(request, pk=sitzungsId)
         # Testergebnis ist: Response data
         interventiongroup_ist = response.data['interventiongroup']
@@ -43,7 +43,7 @@ class TestCase(TestCase):
         print(test_sitzung.isExperiment)
         # Get-Request für Funktion getInterventiongroup erzeugen - PK = Sitzungs-ID
         request = APIRequestFactory().get("")
-        method = SitzungssummaryViewSet.as_view({'get': 'getInterventiongroup'})
+        method = SitzungssummaryViewSet.as_view({'get': 'get_interventiongroup'})
         response = method(request, pk=sitzungsId)
         # Wert von IsExperiment nach dem Request
         isExperiment = sitzungssummary.objects.get(pk=sitzungsId).isExperiment
@@ -60,7 +60,7 @@ class TestCase(TestCase):
         print(test_schueler.interventiongroup)
         # Get-Request für Funktion getInterventiongroup erzeugen - PK = Sitzungs-ID
         request = APIRequestFactory().get("")
-        method = SitzungssummaryViewSet.as_view({'get': 'getInterventiongroup'})
+        method = SitzungssummaryViewSet.as_view({'get': 'get_interventiongroup'})
         response = method(request, pk=sitzungsId)
         # Testergebnis ist: Response data
         interventiongroup_ist = response.data['interventiongroup']
@@ -77,7 +77,7 @@ class TestCase(TestCase):
         print(test_schueler.interventiongroup)
         # Get-Request für Funktion getInterventiongroup erzeugen - PK = Sitzungs-ID
         request = APIRequestFactory().get("")
-        method = SitzungssummaryViewSet.as_view({'get': 'getInterventiongroup'})
+        method = SitzungssummaryViewSet.as_view({'get': 'get_interventiongroup'})
         response = method(request, pk=sitzungsId)
         # Testergebnis ist: Response data
         interventiongroup_ist = response.data['interventiongroup']
