@@ -86,4 +86,3 @@ class TestCase(TestCase):
         groups = ['1', '2', '3', '4', '5', '6']
         is_assigned = interventiongroup_ist in groups
         self.assertEqual(is_assigned, True)
-

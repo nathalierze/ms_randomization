@@ -8,6 +8,7 @@ from .models import schueler, sitzungssummary, gast
 from .serializers import InterventiongroupSerializer, SchuelerSerializer, SitzungssummarySerializer
 import random
 from rest_framework import generics
+from .calldiagnostic import sendReport
 
 from ABTesting import ABTestingController
 import json
@@ -87,8 +88,12 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
         # wenn nicht gk -> 0 zurückgeben 
         if(user.interventiongroup!='0'):
             cohort = user.interventiongroup
-            sitzung.isExperiment = True
-            sitzung.save()
+            if(sitzung.Art =='GK'):
+                sitzung.isExperiment = True
+                sitzung.save()
+            else:
+                sitzung.isExperiment = False
+                sitzung.save()
 
         elif(sitzung.Art=='GK'):
             user_id = sitzung.UserID
@@ -109,6 +114,8 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
         schuelers = schueler.objects.get(ID=user.ID)
         serializer = InterventiongroupSerializer(schuelers)
+
+        sendReport()
 
         return Response(serializer.data)
 
