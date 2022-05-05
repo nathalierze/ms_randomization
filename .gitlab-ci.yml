@@ -67,6 +67,8 @@ stages:
 staging:
     type: deploy
     stage: staging
+    tags: 
+     - ortho
     image: docker:latest
     script:
         - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
@@ -76,6 +78,8 @@ staging:
 production:
     type: deploy
     stage: production
+    tags: 
+     - ortho
     image: docker:latest
     script:
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
