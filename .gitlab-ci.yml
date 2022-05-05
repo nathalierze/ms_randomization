@@ -61,7 +61,7 @@
 #     - gem install dpl
 
 stages:
-    - staging
+  - staging
  #   - production
 
 staging:
