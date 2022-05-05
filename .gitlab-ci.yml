@@ -62,26 +62,38 @@
 
 stages:
     - staging
-    - production
+ #   - production
 
 staging:
-    type: deploy
-    stage: staging
-    tags: 
-     - ortho
-    #image: docker:latest
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
-    only:
-        - staging
+  stage: staging
+  tags: 
+    - ortho
+  script:
+    - apt-get update -yq
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+  only:
+    - staging
 
-production:
-    type: deploy
-    stage: production
-    tags: 
-     - ortho
-    #image: docker:latest
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
-    only:
-        - master
+# staging:
+#     type: deploy
+#     stage: staging
+#     tags: 
+#      - ortho
+#     #image: docker:latest
+#     script:
+#         - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+#     only:
+#         - staging
+
+# production:
+#     type: deploy
+#     stage: production
+#     tags: 
+#      - ortho
+#     #image: docker:latest
+#     script:
+#         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+#     only:
+#         - master
