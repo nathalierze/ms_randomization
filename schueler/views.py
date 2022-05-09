@@ -115,7 +115,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
         schuelers = schueler.objects.get(ID=user.ID)
         serializer = InterventiongroupSerializer(schuelers)
 
-        sendReport()
+        #sendReport()
 
         return Response(serializer.data)
 
