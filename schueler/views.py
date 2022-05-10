@@ -10,6 +10,7 @@ from .serializers import InterventiongroupSerializer, SchuelerSerializer, Sitzun
 import random
 from rest_framework import generics
 from .calldiagnostic import sendReport
+from admin.authentication import TokenAuthentication
 
 from ABTesting import ABTestingController
 import json
@@ -20,7 +21,7 @@ class SchuelerViewSet(viewsets.ModelViewSet):
     """
     queryset = schueler.objects.all()
     serializer_class = SchuelerSerializer
-    authentication_lasses = [authentication.SessionAuthentication]
+    authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
@@ -53,6 +54,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     """
     queryset = sitzungssummary.objects.all()
     serializer_class = SchuelerSerializer
+    authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
