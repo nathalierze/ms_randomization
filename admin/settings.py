@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-d78gp=om2kt83r^-$$178b!3)6rhkv797%&1&bk9jmgt+gh&x_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ortho-randomize-staging.herokuapp.com','localhost']
+ALLOWED_HOSTS = [
+    'ortho-randomize-staging.herokuapp.com',
+    'localhost',
+    'ortho-randomize-prod.herokuapp.com']
 
 
 # Application definition
