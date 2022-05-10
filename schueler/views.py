@@ -2,8 +2,9 @@ from copyreg import pickle
 from django.shortcuts import render
 
 # Create your views here
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions, authentication
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import schueler, sitzungssummary, gast
 from .serializers import InterventiongroupSerializer, SchuelerSerializer, SitzungssummarySerializer
 import random
@@ -19,6 +20,8 @@ class SchuelerViewSet(viewsets.ModelViewSet):
     """
     queryset = schueler.objects.all()
     serializer_class = SchuelerSerializer
+    authentication_lasses = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
         schuelers = schueler.objects.all()
@@ -50,6 +53,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     """
     queryset = sitzungssummary.objects.all()
     serializer_class = SchuelerSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
         sitzungssummaries = sitzungssummary.objects.all()
