@@ -78,12 +78,12 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
     def get_interventiongroup(self, request, pk):
         try:
-            print(request.headers['Username'])
-            auth = schueler.objects.get(Loginname = request.headers['Username'])
+            # print(request.headers['Username'])
+            # auth = schueler.objects.get(Loginname = request.headers['Username'])
 
-            sitzung = sitzungssummary.objects.get(pk=pk)
+            # sitzung = sitzungssummary.objects.get(pk=pk)
 
-            print(pk)
+            # print(pk)
 
             # # lade Daten aus config file
             # with open('/app/schueler/config.json') as json_file:
