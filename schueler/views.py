@@ -56,8 +56,8 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     """
     queryset = sitzungssummary.objects.all()
     serializer_class = SchuelerSerializer
-    authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    # authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
 
     # def list(self, request):
     #     sitzungssummaries = sitzungssummary.objects.all()
