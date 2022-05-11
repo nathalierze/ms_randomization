@@ -56,8 +56,8 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     """
     queryset = sitzungssummary.objects.all()
     serializer_class = SchuelerSerializer
-    # authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
-    # permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     # def list(self, request):
     #     sitzungssummaries = sitzungssummary.objects.all()
@@ -78,58 +78,57 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
     def get_interventiongroup(self, request, pk):
         try:
-            # print(request.headers['Username'])
-            # auth = schueler.objects.get(Loginname = request.headers['Username'])
+            auth = schueler.objects.get(Loginname = request.headers['Username'])
 
-            # sitzung = sitzungssummary.objects.get(pk=pk)
+            sitzung = sitzungssummary.objects.get(pk=pk)
 
-            # print(pk)
+            print(pk)
 
-            # # lade Daten aus config file
-            # with open('/app/schueler/config.json') as json_file:
-            #     config_file = json.load(json_file)
+            # lade Daten aus config file
+            with open('/app/schueler/config.json') as json_file:
+                config_file = json.load(json_file)
 
-            # if(sitzung.UserAttribut=='Schüler'):
-            #     user = schueler.objects.get(pk=sitzung.UserID)
-            #     print(user.ID)
-            # elif(sitzung.UserAttribut=='Gast'):
-            #     user = gast.objects.get(pk=sitzung.UserID)
+            if(sitzung.UserAttribut=='Schüler'):
+                user = schueler.objects.get(pk=sitzung.UserID)
+                print(user.ID)
+            elif(sitzung.UserAttribut=='Gast'):
+                user = gast.objects.get(pk=sitzung.UserID)
             
-            # # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
-            # # dann checken ob gk -> user gruppe zuordnen
-            # # wenn nicht gk -> 0 zurückgeben 
-            # if(user.interventiongroup!='0'):
-            #     cohort = user.interventiongroup
-            #     if(sitzung.Art =='GK'):
-            #         sitzung.isExperiment = True
-            #         sitzung.save()
-            #     else:
-            #         sitzung.isExperiment = False
-            #         sitzung.save()
+            # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
+            # dann checken ob gk -> user gruppe zuordnen
+            # wenn nicht gk -> 0 zurückgeben 
+            if(user.interventiongroup!='0'):
+                cohort = user.interventiongroup
+                if(sitzung.Art =='GK'):
+                    sitzung.isExperiment = True
+                    sitzung.save()
+                else:
+                    sitzung.isExperiment = False
+                    sitzung.save()
 
-            # elif(sitzung.Art=='GK'):
-            #     user_id = sitzung.UserID
-            #     user_profile = {}
-            #     controller = ABTestingController(config_file, user_id, user_profile)
-            #     cohort = controller.get_cohort('learning_analytics')
-            #     user.interventiongroup = cohort
-            #     user.save()
+            elif(sitzung.Art=='GK'):
+                user_id = sitzung.UserID
+                user_profile = {}
+                controller = ABTestingController(config_file, user_id, user_profile)
+                cohort = controller.get_cohort('learning_analytics')
+                user.interventiongroup = cohort
+                user.save()
 
-            #     sitzung.isExperiment = True
-            #     sitzung.save()
-            # else:
-            #     cohort = '0'
-            #     user.interventiongroup = 0
-            #     user.save()
+                sitzung.isExperiment = True
+                sitzung.save()
+            else:
+                cohort = '0'
+                user.interventiongroup = 0
+                user.save()
 
-            # print(cohort)
+            print(cohort)
 
-            # schuelers = schueler.objects.get(ID=user.ID)
-            # serializer = InterventiongroupSerializer(schuelers)
+            schuelers = schueler.objects.get(ID=user.ID)
+            serializer = InterventiongroupSerializer(schuelers)
 
-            # #sendReport()
+            #sendReport()
 
-            # return Response(serializer.data)
-            return Response(2)
+            return Response(serializer.data)
+            
         except schueler.DoesNotExist:
             raise PermissionDenied() 
