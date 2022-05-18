@@ -78,22 +78,28 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
     def get_interventiongroup(self, request, pk):
         try:
+            print("in interventiongroup")
             auth = schueler.objects.get(Loginname = request.headers['Username'])
 
-            sitzung = sitzungssummary.objects.get(pk=pk)
+            sitzung = sitzungssummary.objects.get(pk=29704306)
+            #sitzung = sitzungssummary.objects.get(pk=pk)
 
             print(pk)
+            print(sitzung)
 
             # lade Daten aus config file
             with open('/app/schueler/config.json') as json_file:
                 config_file = json.load(json_file)
 
             if(sitzung.UserAttribut=='Schüler'):
-                user = schueler.objects.get(pk=sitzung.UserID)
+                user = schueler.objects.get(pk=1013931)
+                #user = schueler.objects.get(pk=sitzung.UserID)
                 print(user.ID)
             elif(sitzung.UserAttribut=='Gast'):
                 user = gast.objects.get(pk=sitzung.UserID)
             
+
+            print(user)
             # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
             # dann checken ob gk -> user gruppe zuordnen
             # wenn nicht gk -> 0 zurückgeben 
@@ -107,6 +113,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                     sitzung.save()
 
             elif(sitzung.Art=='GK'):
+                print("in gk")
                 user_id = sitzung.UserID
                 user_profile = {}
                 controller = ABTestingController(config_file, user_id, user_profile)
