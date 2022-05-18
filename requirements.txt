@@ -6,3 +6,4 @@ django-cors-headers==3.5.0
 py-ab-testing==1.2.2
 requests==2.25.0
 gunicorn==18.0.0
+sentry_sdk
