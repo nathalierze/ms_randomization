@@ -111,6 +111,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                 else:
                     sitzung.isExperiment = False
                     sitzung.save()
+                    print("komma")
 
             elif(sitzung.Art=='GK'):
                 print("in gk")
