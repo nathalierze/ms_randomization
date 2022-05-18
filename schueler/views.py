@@ -81,7 +81,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
             print("in interventiongroup")
             auth = schueler.objects.get(Loginname = request.headers['Username'])
 
-            sitzung = sitzungssummary.objects.get(pk=29704306)
+            sitzung = sitzungssummary.objects.get(pk=29704316)
             #sitzung = sitzungssummary.objects.get(pk=pk)
 
             print(pk)
