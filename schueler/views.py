@@ -37,10 +37,8 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
             with open('/app/schueler/config.json') as json_file:
                 config_file = json.load(json_file)
 
-            if(sitzung.UserAttribut=='Schüler'):
-                user = schueler.objects.get(pk=sitzung.UserID)
-            elif(sitzung.UserAttribut=='Gast'):
-                user = gast.objects.get(pk=sitzung.UserID)
+           
+            user = schueler.objects.get(pk=sitzung.UserID)
             
             # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
             # dann checken ob gk -> user gruppe zuordnen
@@ -69,6 +67,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                 user.interventiongroup = 0
                 user.save()
 
+            print("This is the cohort")
             print(cohort)
 
             schuelers = schueler.objects.get(ID=user.ID)
