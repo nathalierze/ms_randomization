@@ -5,15 +5,6 @@
             "name": "learning_analytics",
             "cohorts": [
                 {
-                    "name": 1,
-                    "allocation": [
-                        [
-                            0,
-                            90
-                        ]
-                    ]
-                },
-                {
                     "name": 2,
                     "allocation": [
                         [
