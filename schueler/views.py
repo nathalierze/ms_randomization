@@ -29,7 +29,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
 
     def get_interventiongroup(self, request, pk):
         try:
-            auth = schueler.objects.get(Loginname = request.headers['Username'])
+            #auth = schueler.objects.get(Loginname = request.headers['Username'])
 
             sitzung = sitzungssummary.objects.get(pk=pk)
 
