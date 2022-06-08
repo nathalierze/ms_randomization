@@ -30,42 +30,45 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     def get_interventiongroup(self, request, pk):
         try:
             #auth = schueler.objects.get(Loginname = request.headers['Username'])
+            try:
+                sitzung = sitzungssummary.objects.get(pk=pk)
 
-            sitzung = sitzungssummary.objects.get(pk=pk)
+                # lade Daten aus config file
+                with open('/app/schueler/config.json') as json_file:
+                    config_file = json.load(json_file)
 
-            # lade Daten aus config file
-            with open('/app/schueler/config.json') as json_file:
-                config_file = json.load(json_file)
-
-           
-            user = schueler.objects.get(pk=sitzung.UserID)
             
-            # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
-            # dann checken ob gk -> user gruppe zuordnen
-            # wenn nicht gk -> 0 zurückgeben 
-            if(user.interventiongroup!='0'):
-                cohort = user.interventiongroup
-                if(sitzung.Art =='GK'):
+                user = schueler.objects.get(pk=sitzung.UserID)
+            
+                # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
+                # dann checken ob gk -> user gruppe zuordnen
+                # wenn nicht gk -> 0 zurückgeben 
+                if(user.interventiongroup!='0'):
+                    cohort = user.interventiongroup
+                    if(sitzung.Art =='GK'):
+                        sitzung.isExperiment = True
+                        sitzung.save()
+                    else:
+                        sitzung.isExperiment = False
+                        sitzung.save()
+
+                elif(sitzung.Art=='GK'):
+                    user_id = sitzung.UserID
+                    user_profile = {}
+                    controller = ABTestingController(config_file, user_id, user_profile)
+                    cohort = controller.get_cohort('learning_analytics')
+                    user.interventiongroup = cohort
+                    user.save()
+
                     sitzung.isExperiment = True
                     sitzung.save()
                 else:
-                    sitzung.isExperiment = False
-                    sitzung.save()
+                    cohort = '0'
+                    user.interventiongroup = 0
+                    user.save()
 
-            elif(sitzung.Art=='GK'):
-                user_id = sitzung.UserID
-                user_profile = {}
-                controller = ABTestingController(config_file, user_id, user_profile)
-                cohort = controller.get_cohort('learning_analytics')
-                user.interventiongroup = cohort
-                user.save()
-
-                sitzung.isExperiment = True
-                sitzung.save()
-            else:
+            except:
                 cohort = '0'
-                user.interventiongroup = 0
-                user.save()
 
             print("This is the cohort")
             print(cohort)
