@@ -60,7 +60,7 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                 user.interventiongroup = 0
                 user.save()
 
-            print("This is the cohort")
+            print("The cohort")
             print(cohort)
 
             schuelers = schueler.objects.get(ID=user.ID)
