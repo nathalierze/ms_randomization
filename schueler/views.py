@@ -1,7 +1,5 @@
 from copyreg import pickle
 from django.shortcuts import render
-
-# Create your views here
 from rest_framework import viewsets, status, permissions, authentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -12,8 +10,6 @@ from rest_framework import generics
 from .calldiagnostic import sendReport
 from admin.authentication import TokenAuthentication
 from django.core.exceptions import PermissionDenied
-
-
 from ABTesting import ABTestingController
 import json
 import os
@@ -27,6 +23,9 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
+    """
+    Get interventiongroup from AufgabenID sent
+    """
     def get_interventiongroup(self, request, pk):
         #try:
             #auth = schueler.objects.get(Loginname = request.headers['Username'])
@@ -34,16 +33,11 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
         try:
             sitzung = sitzungssummary.objects.get(pk=pk)
 
-            # lade Daten aus config file
+            # config.json defines interventiongroups
             with open('/app/schueler/config.json') as json_file:
                 config_file = json.load(json_file)
 
-        
             user = schueler.objects.get(pk=sitzung.UserID)
-        
-            # erst checken ob user bereits interventionsgruppe -> dann gruppe zurückgebeb
-            # dann checken ob gk -> user gruppe zuordnen
-            # wenn nicht gk -> 0 zurückgeben 
             if(user.interventiongroup!='0'):
                 cohort = user.interventiongroup
                 if(sitzung.Art =='GK'):
@@ -52,7 +46,6 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                 else:
                     sitzung.isExperiment = False
                     sitzung.save()
-
             elif(sitzung.Art=='GK'):
                 user_id = sitzung.UserID
                 user_profile = {}
@@ -60,7 +53,6 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                 cohort = controller.get_cohort('learning_analytics')
                 user.interventiongroup = cohort
                 user.save()
-
                 sitzung.isExperiment = True
                 sitzung.save()
             else:
@@ -68,20 +60,15 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
                 user.interventiongroup = 0
                 user.save()
 
-        
-
             print("This is the cohort")
             print(cohort)
 
             schuelers = schueler.objects.get(ID=user.ID)
             serializer = InterventiongroupSerializer(schuelers)
-
             sendReport(user.Loginname)
-
             return Response(serializer.data)
 
         except:
-            print("in ex")
             cohort_dict = {"interventiongroup": "0"}
             return Response(cohort_dict)
             
