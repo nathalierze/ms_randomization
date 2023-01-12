@@ -27,50 +27,50 @@ class SitzungssummaryViewSet(viewsets.ModelViewSet):
     Get interventiongroup from AufgabenID sent
     """
     def get_interventiongroup(self, request, pk):
-        #try:
-            #auth = schueler.objects.get(Loginname = request.headers['Username'])
-            
         try:
-            sitzung = sitzungssummary.objects.get(pk=pk)
+            auth = schueler.objects.get(Loginname = request.headers['Username'])
+            
+            try:
+                sitzung = sitzungssummary.objects.get(pk=pk)
 
-            # config.json defines interventiongroups
-            with open('/app/schueler/config.json') as json_file:
-                config_file = json.load(json_file)
+                # config.json defines interventiongroups
+                with open('/app/schueler/config.json') as json_file:
+                    config_file = json.load(json_file)
 
-            user = schueler.objects.get(pk=sitzung.UserID)
-            if(user.interventiongroup!='0'):
-                cohort = user.interventiongroup
-                if(sitzung.Art =='GK'):
+                user = schueler.objects.get(pk=sitzung.UserID)
+                if(user.interventiongroup!='0'):
+                    cohort = user.interventiongroup
+                    if(sitzung.Art =='GK'):
+                        sitzung.isExperiment = True
+                        sitzung.save()
+                    else:
+                        sitzung.isExperiment = False
+                        sitzung.save()
+                elif(sitzung.Art=='GK'):
+                    user_id = sitzung.UserID
+                    user_profile = {}
+                    controller = ABTestingController(config_file, user_id, user_profile)
+                    cohort = controller.get_cohort('learning_analytics')
+                    user.interventiongroup = cohort
+                    user.save()
                     sitzung.isExperiment = True
                     sitzung.save()
                 else:
-                    sitzung.isExperiment = False
-                    sitzung.save()
-            elif(sitzung.Art=='GK'):
-                user_id = sitzung.UserID
-                user_profile = {}
-                controller = ABTestingController(config_file, user_id, user_profile)
-                cohort = controller.get_cohort('learning_analytics')
-                user.interventiongroup = cohort
-                user.save()
-                sitzung.isExperiment = True
-                sitzung.save()
-            else:
-                cohort = '0'
-                user.interventiongroup = 0
-                user.save()
+                    cohort = '0'
+                    user.interventiongroup = 0
+                    user.save()
 
-            print("The cohort")
-            print(cohort)
+                print("The cohort")
+                print(cohort)
 
-            schuelers = schueler.objects.get(ID=user.ID)
-            serializer = InterventiongroupSerializer(schuelers)
-            sendReport(user.Loginname)
-            return Response(serializer.data)
+                schuelers = schueler.objects.get(ID=user.ID)
+                serializer = InterventiongroupSerializer(schuelers)
+                sendReport(user.Loginname)
+                return Response(serializer.data)
 
-        except:
-            cohort_dict = {"interventiongroup": "0"}
-            return Response(cohort_dict)
+            except:
+                cohort_dict = {"interventiongroup": "0"}
+                return Response(cohort_dict)
             
-        # except schueler.DoesNotExist:
-        #     raise PermissionDenied() 
+        except schueler.DoesNotExist:
+            raise PermissionDenied()

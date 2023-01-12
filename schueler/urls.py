@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import SitzungssummaryViewSet #SchuelerViewSet, SitzungssummaryViewSet
+from .views import SitzungssummaryViewSet
 
 urlpatterns = [
     path('interventiongroup/<str:pk>', SitzungssummaryViewSet.as_view({
